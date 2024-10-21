@@ -6,7 +6,7 @@ using namespace std;
 
 
 template <typename T>
-class LinkedList
+class SuperList
 {
 	private:
 		struct ListNode
@@ -53,7 +53,7 @@ class LinkedList
 
 //Append Node Function 
 template <typename T>
-void LinkedList<T>::appendNode(T value)
+void SuperList<T>::appendNode(T value)
 {
     ListNode * newNode = new ListNode;
 	ListNode * nodePointer;
@@ -82,7 +82,7 @@ void LinkedList<T>::appendNode(T value)
 
 //Delete Node Function 
 template <typename T>
-void LinkedList<T>::deleteNode(int position)
+void SuperList<T>::deleteNode(int position)
  {
     ListNode * nodePointer = head;
 	ListNode * deleteNode;
@@ -117,7 +117,7 @@ void LinkedList<T>::deleteNode(int position)
 
 //Display List Function 
 template <typename T>
-void LinkedList<T>::displayList() const
+void SuperList<T>::displayList() const
 {
     ListNode * nodePointer = head;
 	int counter = 1;
