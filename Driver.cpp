@@ -5,11 +5,16 @@
 	Purpose:    Contains full program flow, all classes used, all 
                     functions can be tested, takes user input & ends naturally
 *********************************************************************************/
-#include "linkedListDriver.h"
-#include "otherClass.h"
-#include "otherClass.cpp"
-#include "dataClass.cpp"
-#include "dataClass.h"
+#include "LinkedListDriver.h"
+#include "OtherClass.h"
+#include "OtherClass.cpp"
+#include "DataClass.cpp"
+#include "DataClass.h"
+
+int main()
+{
+	superPrint();
+	
 
 
- 
+}
