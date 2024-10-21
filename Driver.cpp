@@ -14,9 +14,10 @@
 int main()
 {
 	superPrint();
-	
-
-
+	cout << "\n***Welcome to Superhero Super Sort!***";
+	cout << "\nSee who's the best of the best or even who's the worst!" << endl;
+	menuDisplay();
+return 0;
 }
 
 
