@@ -1,3 +1,9 @@
+/*****************************************************************
+	Title:  	LinkedList.h
+	Date:           10/08/2024
+	Author: 	Jocelyn Lee & Kylie Truong
+	Purpose:	Header file for Linked List
+******************************************************************/
 #ifndef LinkedList_H
 #define LinkedList_H
 
@@ -13,7 +19,8 @@ class SuperList
 		{
 			//STRUCTURE MEMBERS NEED TO BE ADDED HERE
 			T data;
-			struct ListNode * next;
+			ListNode * next;
+			ListNode * prev;
 		}; 
 
 		ListNode *head;	
