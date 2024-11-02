@@ -28,13 +28,6 @@ class SuperList
         listNode * head;
         listNode * tail; 
 
-        /*private function Prototypes*/
-        void print(listNode*);
-        listNode* mergesort(listNode*, listNode*);
-        listNode* split(listNode*, listNode*);
-        listNode* merge(listNode*,listNode*);
-        void swap(listNode*, listNode*);
-
     public:
         /*Constructor*/
         SuperList()
@@ -51,7 +44,6 @@ class SuperList
         void printHeroes()
             {printHeroes(head);}
         friend void mergesort();
-        friend void selectionSort();
 };
 
 /*****************************************
