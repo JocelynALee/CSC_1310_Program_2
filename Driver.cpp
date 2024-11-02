@@ -6,6 +6,8 @@
                     functions can be tested, takes user input & ends naturally
 *********************************************************************************/
 #include "LinkedListDriver.h"
+#include "DataClass.h"
+#include "SmartPointer.h"
 #include <fstream> 
 #include <iostream>
 using namespace std;
