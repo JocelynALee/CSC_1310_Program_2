@@ -2,10 +2,10 @@
 	Title: 	 DataClass.cpp
 	Authors: Jocelyn Lee & Kylie Truong
 	Date:  	 11/1/2024
-	Purpose: Stores the information of superheroes, ___________________
+	Purpose: Implements DataClass methods defined in the header
 *************************************************************************/
 #include "LinkedListDriver.h"
-#include "OtherClass.h"
+#include "SmartPointer.h"
 #include "DataClass.h"
 
 /* Setters */
