@@ -7,6 +7,7 @@
 #ifndef LINKEDLISTDRIVER_H
 #define LINKEDLISTDRIVER_H
 #include <iostream>
+#include <sstream>
 #include "SmartPointer.h"
 using namespace std;
 
@@ -23,8 +24,9 @@ private:
         SmartPointer<T> data;
         listNode * next;
         listNode * previous;
+    /*Constructor for listNode*/
+    listNode(const T& heroData) : data(SmartPointer<T>(new T(heroData))), next(nullptr), previous(nullptr) {}
     };
-
     int size;
     listNode * head;
     listNode * tail; 
@@ -45,6 +47,7 @@ private:
 
         return middle;
     }
+
     listNode * merge(listNode* left, listNode* right, bool ascending)
     {
         if (left == nullptr) 
@@ -52,20 +55,20 @@ private:
         if (right == nullptr) 
             return left;
 
-        if ((ascending && left -> data <= right -> data) || (!ascending && left -> data > right -> data))
+        if ((ascending && *left -> data <= *right -> data) || (!ascending && *left -> data > *right -> data))
         {
             left -> next = merge(left -> next, right, ascending);
             left -> next -> previous = left;
             left -> previous = nullptr;
             return left;
         }
-            else
-            {
-                right -> next = merge(left, right -> next, ascending);
-                right -> next -> previous = right;
-                right -> previous = nullptr;
-                return right;
-            }
+        else
+        {
+            right -> next = merge(left, right -> next, ascending);
+            right -> next -> previous = right;
+            right -> previous = nullptr;
+            return right;
+        }
     }
 
 public:
@@ -83,12 +86,13 @@ public:
     /*Function Prototypes*/
     void appendSuperHero(const T& heroData);
     void printHeroesTop() const;
+    void printHeroesBottom() const;
     bool removeHero(const T& hero);
     void mergeSort(bool ascending = true);
-    void removeHero(T hero);
     bool getAtHero(int index, T& value) const;
-    friend ostream& operator<<(ostream& os, const SuperList<T>& list);
     int getSize() const { return size; }
+    template<typename U>
+    friend ostream& operator<<(ostream& os, const SuperList<U>& list);
 };
 
 /*********************************************/
@@ -113,7 +117,7 @@ SuperList<T>::~SuperList()
 template<typename T>
 void SuperList<T>::appendSuperHero(const T& heroData)
 {
-    listNode* newNode = new listNode;
+    listNode* newNode = new listNode(heroData);
     newNode->data = SmartPointer<T>(new T(heroData));
     newNode->next = nullptr;
     newNode->previous = nullptr; 
@@ -122,12 +126,12 @@ void SuperList<T>::appendSuperHero(const T& heroData)
         head = newNode;
         tail = newNode;
     }
-        else
-        {
-            tail -> next = newNode;
-            newNode -> previous = tail; 
-            tail = newNode; 
-        }
+    else
+    {
+        tail -> next = newNode;
+        newNode -> previous = tail; 
+        tail = newNode; 
+    }
     size++;
     mergeSort();
 }
@@ -136,15 +140,15 @@ void SuperList<T>::appendSuperHero(const T& heroData)
 /*              printHeroesTop               */
 /*********************************************/
 template <typename T>
-void printHeroesTop() 
+void SuperList<T>::printHeroesTop() const
 {
     cout << "Top Ranked Heroes!\n";
-    for (int i = 0; i < heroList.getSize(); ++i) 
+    for (int i = 0; i < size; ++i) 
     {
-        DataClass hero;
-        if (heroList.getAtHero(i, hero)) 
+        T hero("", 0, ""); 
+        if (getAtHero(i, hero)) 
         {
-            cout << "RANK " << i + 1 << ". " << hero.getName() << " - " << hero.getRank() << endl;
+            cout << "RANK " << hero.getRank() << ". " << hero.getName() << endl; 
         }
     }
 }
@@ -152,16 +156,16 @@ void printHeroesTop()
 /*********************************************/
 /*             printHeroesBottom             */
 /*********************************************/
-template<typename T>
-void printHeroesBottom() 
+template <typename T>
+void SuperList<T>::printHeroesBottom() const
 {
     cout << "Bottom Ranked Heroes!\n";
-    for (int i = heroList.getSize() - 1; i >= 0; --i) 
+    for (int i = size - 1; i >= 0; --i) 
     {
-        DataClass hero;
-        if (heroList.getAtHero(i, hero)) 
+        T hero("", 0, ""); 
+        if (getAtHero(i, hero)) 
         {
-            cout << "RANK " << (heroList.getSize() - i) << ". " << hero.getName() << " - " << hero.getRank() << endl;
+            cout << "RANK " << hero.getRank() << ". " << hero.getName() << endl; 
         }
     }
 }
@@ -206,41 +210,36 @@ bool SuperList<T>::removeHero(const T& hero)
 {
     if (!head)
     {
-        cout << "There are no heroes in the list.\n";
+        cout << "There are no heroes in the list.";
         return false;
     }
     
     listNode* superHero = head;
 
-    // Search for hero by matching the `data` field.
-    while (superHero != nullptr && superHero->data != hero)
+    while (superHero != nullptr && *superHero->data != hero)
     {
         superHero = superHero->next;
     }
 
-    // If hero is not found.
     if (!superHero) 
     {
-        cout << "This superhero is not in the list.\n";
+        cout << "This superhero is not in the list.";
         return false;
     }
 
-    // Hero is at the head of the list.
     if (superHero == head)
     {
         head = head->next;
         if (head)
             head->previous = nullptr;
         else
-            tail = nullptr;  // List is now empty.
+            tail = nullptr;
     }
-    // Hero is at the tail of the list.
     else if (superHero == tail)
     {
         tail = tail->previous;
         tail->next = nullptr;
     }
-    // Hero is somewhere in the middle of the list.
     else
     {
         superHero->previous->next = superHero->next;
@@ -250,9 +249,8 @@ bool SuperList<T>::removeHero(const T& hero)
     delete superHero;
     size--;
 
-    // Optional: re-sort the list after removal if needed.
     mergeSort();
-    cout << "The superhero " << hero.getName() << " has been deleted from the list.\n";
+    cout << "The superhero " << hero.getName() << " has been deleted from the list.";
     return true;
 }
 
@@ -260,7 +258,7 @@ bool SuperList<T>::removeHero(const T& hero)
 /*                getAtHero                  */
 /*********************************************/
 template<typename T>
-bool SuperList<T>::getAtHero(int index, T& value) const 
+bool SuperList<T>::getAtHero(int index, T& hero) const 
 {
     if (index < 0 || index >= size) {  
         return false;
@@ -272,7 +270,7 @@ bool SuperList<T>::getAtHero(int index, T& value) const
     while (current != nullptr) 
     {
         if (count == index) {
-            value = *(current -> data);
+            hero = *(current -> data);
             return true;
         }
         current = current -> next;
