@@ -88,6 +88,7 @@ public:
     void printHeroesBottom() const;
     void mergeSort();
     void removeHero(T);
+    bool getAtHero(int index, T& value) const;
 };
 
 /*********************************************/
@@ -241,6 +242,31 @@ void SuperList<T>::removeHero(T hero)
     }
     delete superHero;
     cout << "The superhero " << hero << " has been deleted from the list.\n";
+}
+
+/*********************************************/
+/*                getAtHero                  */
+/*********************************************/
+template<typename T>
+bool SuperList<T>::getAtHero(int index, T& value) const 
+{
+    if (index < 0) {
+        return false;
+    }
+    listNode * current = head;
+    int count = 0;
+
+    while (current != nullptr) 
+    {
+        if (count == index) {
+            value = current -> data;
+            return true;
+        }
+        current = current -> next;
+        count++;
+    }
+
+    return false;
 }
 
 #endif
