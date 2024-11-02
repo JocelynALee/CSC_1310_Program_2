@@ -2,7 +2,8 @@
 	Title: 	  dataClass.h
 	Authors:  Jocelyn Lee & Kylie Truong
 	Date:  	  11/01/2024
-	Purpose:  Header file for dataClass.cpp 
+	Purpose:  Header file for dataClass.cpp
+    Included: Necessary attributes, getters, setters & operator overloads 
 *********************************************************************************/
 #include <string>
 #include <ostream>
@@ -23,10 +24,10 @@ public:
     /* Constructor */
     DataClass(string n, int p, string s);
 
-    /* Setters */
-    void setName(const string& n);
-    void setPowerLevel(int p);
-    void setSuperPower(const string& s);
+	/* Setters */
+	void setName(const string& n);
+	void setPowerLevel(int p);
+	void setSuperPower(const string& s);
 
     /* Getters */
     string getName() const;
@@ -41,5 +42,4 @@ public:
     /* Friend function for output */
     friend std::ostream& operator<<(ostream& os, const DataClass& data);
 };
-
 #endif
