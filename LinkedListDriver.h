@@ -1,51 +1,56 @@
-/*****************************************************************
-	Title:  	LinkedList.h
-	Date:           10/08/2024
-	Author: 	Jocelyn Lee & Kylie Truong
-	Purpose:	Header file for Linked List
-******************************************************************/
-#ifndef LinkedList_H
-#define LinkedList_H
+/*************************************************************************
+	Title: 	 LinkedListDriver.h
+	Authors: Jocelyn Lee & Kylie Truong
+	Date:  	 11/1/2024
+	Purpose: Everything needed for class SuperList
+*************************************************************************/
+#ifndef LINKEDLISTDRIVER_H
+#define LINKEDLISTDRIVER_H
 
-#include <iostream>
-#include "OtherClass.h"
-#include "DataClass.h"
+#include<iostream>
+#include "HeroRanks.h"
 using namespace std;
 
-/*****************************************
-*             SuperList Class
-*****************************************/
-template <typename T>
+/*********************************************/
+/*              SuperList Class
+/*********************************************/
+template<typename T>
 class SuperList
 {
-	private:
-    //struct for list node data and pointers to next and prev
-		struct ListNode
-		{
-			T data;
-			ListNode * next;
-			ListNode * prev;
-		}; 
-		ListNode *head;	
-		ListNode *tail;		
+    private:
+        /*ListNode struct containing data and 2 pointers*/
+        struct listNode
+        { 
+            T data;
+            listNode * next;
+            listNode * previous;
+        };
+        listNode * head;
+        listNode * tail; 
 
-	public:
-        //sets to NULL
-		LinkedList()
-		{ 
-			head = NULL; 
-			tail = NULL;
-		}
-        //destructor
-		~LinkedList()
-        //functions
-		void addSuperHero(T);
-		void deleteNode(int position);
-		void displayTopList();
-        void displayBottomList();
-        void printSuperHero();
-        void removeSuperHero();
-        friend void mergeSort();
+        /*private function Prototypes*/
+        void print(listNode*);
+        listNode* mergesort(listNode*, listNode*);
+        listNode* split(listNode*, listNode*);
+        listNode* merge(listNode*,listNode*);
+        void swap(listNode*, listNode*);
+
+    public:
+        /*Constructor*/
+        SuperList()
+        {
+            head = NULL;
+            tail = NULL;
+        }
+
+        /*Deconstructor*/
+        ~SuperList(); 
+
+        /*Public Function Prototypes*/
+        void appendSuperHero(T);
+        void printHeroes()
+            {printHeroes(head);}
+        friend void mergesort();
         friend void selectionSort();
 };
 
