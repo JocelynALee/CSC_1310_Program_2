@@ -23,8 +23,9 @@ void loadFile(SuperList<DataClass>& heroList, const string& heroFile);
 //******************************************************************
 int main()
 {
+	/*Creates SuperList*/
+	SuperList<DataClass> heroList;
     /*Opens File*/
-    SuperList<DataClass> heroList;
     const string heroFile = "superheroes.txt";
     loadFile(heroList, heroFile);
 
@@ -76,17 +77,17 @@ int main()
 
             /*User Removes SuperHero*/
             case 2:
-                cout << "\nEnter the name of the superhero to remove: ";
+				cout << "\nEnter the name of the superhero to remove: ";
 					cin.ignore();
-				getline(cin, name);
+					getline(cin, name);
 				if (heroList.removeHero(DataClass(name, 0, "")))
 				{
 					cout << "Superhero removed successfully!\n";
 				}
-				else 
-				{
-					cout << "Superhero not found!\n";
-				}
+					else 
+					{
+						cout << "Superhero not found!\n";
+					}
 				break;
 
             /*Prints heroes from best to worst*/
@@ -103,28 +104,24 @@ int main()
 
             /*Selects Hero from Index*/
             case 5:
-                int index;
-                cout << "\nEnter the index of the superhero to retrieve: ";
-                cin >> index;
+				int index;
+				cout << "\nEnter the index of the superhero to retrieve: ";
+				cin >> index;
 				if (index < 0 || index >= heroList.size()) 
 				{
 					cout << "Invalid index. Please enter a valid index between 0 and " << heroList.size() - 1 << ".\n";
 				}
-                DataClass hero;
-                else 
+    			DataClass hero;
+    			if (index >= 0 && index < heroList.getSize() && heroList.getAtHero(index, hero)) 
 				{
-					if (heroList.getAtHero(index, hero)) 
-					{
-						cout << "Hero at index " << index << ": " << hero << endl;
-					} 
-					else 
-					{
-						cout << "No hero found at that index.\n";
-					}
-				}
-                break;
-
-
+        			cout << "Hero at index " << index << ": " << hero << endl;
+    			} 
+				else 
+				{
+        			cout << "Invalid index or no hero found at that index.\n";
+    			}
+    			break;
+            
             /*Exits Program and saves to file*/
             case 6:
                 saveToFile(heroList, heroFile);
