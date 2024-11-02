@@ -6,8 +6,6 @@
 *************************************************************************/
 #include "LinkedListDriver.h"
 #include "OtherClass.h"
-#include "OtherClass.cpp"
-#include "DataClass.cpp"
 #include "DataClass.h"
 
 //****************************************************************************
@@ -19,6 +17,19 @@
 
 void menuDisplay()
 {
+    int userInput;
+    int endProgram = 0;
+	
+    //Make sure the pokedex file exists
+    fstream pokeDexFile;
+    pokeDexFile.open("pokedex.txt");
+    
+    //Create it if it doesn't exist
+    if (!pokeDexFile)
+    {
+	ofstream pokedexInfo("pokedex.txt");
+    };
+
     do{
 	cout << "\n\nWhat Would You Like to Do?" << endl;
     cout << "1. Display the best superHero Catalogue!!" << endl;
@@ -33,14 +44,17 @@ void menuDisplay()
             case 1:
                 displayTopList();
                 break;
+
             //Displays Worst Superhero Catalogue
             case 2:
                 displayBottomList();
                 break;
+
             //Adds New Hero to Catalogue
             case 3:
                 addSuperhero();
                 break;
+
             //deletes hero
             case 4:
                 int heroDelete;
@@ -49,6 +63,7 @@ void menuDisplay()
                 cin >> heroDelete;
                 removeSuperHero(index, heroDelete);
                 break;
+
             //Ends Program
             case 5:
                 endProgram = 1;
