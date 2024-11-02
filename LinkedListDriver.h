@@ -8,7 +8,6 @@
 #define LINKEDLISTDRIVER_H
 
 #include<iostream>
-#include "HeroRanks.h"
 using namespace std;
 
 /*********************************************/
@@ -18,7 +17,7 @@ template<typename T>
 class SuperList
 {
     private:
-        /*ListNode struct containing data and 2 pointers*/
+        /*listNode struct*/
         struct listNode
         { 
             T data;
@@ -39,11 +38,11 @@ class SuperList
         /*Deconstructor*/
         ~SuperList(); 
 
-        /*Public Function Prototypes*/
+        /*Function Prototypes*/
         void appendSuperHero(T);
-        void printHeroes()
-            {printHeroes(head);}
-        friend void mergesort();
+        void printHeroesTop() const;
+        void printHeroesBottom() const;
+        void mergeSort();
 };
 
 /*****************************************
