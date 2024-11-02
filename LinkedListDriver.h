@@ -8,123 +8,131 @@
 #define LinkedList_H
 
 #include <iostream>
+#include "OtherClass.h"
+#include "DataClass.h"
 using namespace std;
 
-
+/*****************************************
+*             SuperList Class
+*****************************************/
 template <typename T>
 class SuperList
 {
 	private:
+    //struct for list node data and pointers to next and prev
 		struct ListNode
 		{
-			//STRUCTURE MEMBERS NEED TO BE ADDED HERE
 			T data;
 			ListNode * next;
 			ListNode * prev;
 		}; 
-
 		ListNode *head;	
 		ListNode *tail;		
 
 	public:
+        //sets to NULL
 		LinkedList()
 		{ 
 			head = NULL; 
 			tail = NULL;
 		}
-
+        //destructor
 		~LinkedList()
-		{
-			ListNode * nodePointer;
-			ListNode * nextNode;
-			nodePointer = head;
-
-			while(nodePointer)
-			{
-				nextNode = nodePointer->next;
-				cout << "**** DELETING the node with address: " << nodePointer << endl;
-				delete nodePointer;
-				nodePointer = nextNode;
-			}
-			cout << "Have fun!";
-
-		}
-
-
-		void appendNode(T value);
+        //functions
+		void addSuperHero(T);
 		void deleteNode(int position);
-		void displayList() const;
+		void displayTopList();
+        void displayBottomList();
+        void printSuperHero();
+        void removeSuperHero();
+        friend void mergeSort();
+        friend void selectionSort();
 };
 
-//DEFINE ALL OTHER LinkedList class FUNCTIONS BELOW THIS LINE--------------------------------
-
-//Append Node Function 
-template <typename T>
-void SuperList<T>::appendNode(T value)
+/*****************************************
+*        Deconstructor Function
+*****************************************/
+SuperList<T>::~SuperList()
 {
-    ListNode * newNode = new ListNode;
-	ListNode * nodePointer;
-
-    newNode->data = value;
-    newNode->next = NULL;
-
-    if(!head)
+    ListNode * newNode = head;
+    ListNode * temp;
+    while(newNode != NULL)
     {
-        head = newNode;   
-    } 
-    else 
-    {
-        nodePointer = head;
-		int counter = 0;
-
-		while( nodePointer->next != NULL)
-		{
-			cout << "- node " << counter++;
-			nodePointer = nodePointer->next; 
-		}
-
-		nodePointer->next = newNode;
+        temp = newNode -> next;
+        delete newNode;
+        newNode = temp;
     }
 }
 
-//Delete Node Function 
+/*****************************************
+*        addSuperHero Function
+*        appendNode
+*****************************************/
 template <typename T>
-void SuperList<T>::deleteNode(int position)
- {
-    ListNode * nodePointer = head;
-	ListNode * deleteNode;
-	int i = 0;
-
-	if( head == NULL)
-	{
-
-	}
-	else if( position == 0)
-	{
-		cout << "Deleting " ;
-		nodePointer = head->next;
-		delete head;
-		head = nodePointer;
-	}
-	else 
-	{
-		while(i+1 != position && nodePointer != NULL)
-		{
-			nodePointer = nodePointer->next;
-			i++;
-		}
-		
-		deleteNode = nodePointer->next;
-		nodePointer->next = nodePointer->next->next;
-		delete deleteNode;
-
-	}
-       
+void SuperList<T>::addSuperHero(T newValue)
+{
+    ListNode * newNode = new ListNode;
+    newNode -> value = newValue; 
+    if (!head)
+    {
+        head = newNode;
+        tail = newNode;
+        newNode -> next = NULL;
+        newNode -> prev = NULL;
+    }
+        else
+        {
+            tail -> next = newNode; 
+            newNode -> prev = tail;
+            newNode -> next = NULL;
+            tail = newNode;
+        }
 }
 
-//Display List Function 
+/*****************************************
+*        removeSuperHero Function
+*****************************************/
 template <typename T>
-void SuperList<T>::displayList() const
+void SuperList<T>::removeSuperHero(int position)
+ {
+    ListNode * nodePtr;
+    ListNode *priorNode;
+    if(!head)
+    {
+        cout << "There's no superheroes in this list.\n";
+        return;
+    }
+    else if(head -> value == position)
+    {
+        nodePtr = head -> next;
+        delete head;
+        head = nodePtr;
+    }
+    else
+    {
+        nodePtr = head; 
+        while((nodePtr != NULL) && (nodePtr -> value != position))
+        {
+            priorNode = nodePtr;
+            nodePtr = nodePtr -> next;
+        }
+        if(nodePtr)
+        {
+            if(nodePtr == tail)
+            {
+                tail = priorNode;
+            }
+            priorNode -> next = nodePtr -> next;
+            delete nodePtr;
+        }
+    }     
+}
+
+/*****************************************
+*        printSuperHero Function
+*****************************************/ 
+template <typename T>
+void SuperList<T>::printSuperHero()
 {
     ListNode * nodePointer = head;
 	int counter = 1;
@@ -135,22 +143,29 @@ void SuperList<T>::displayList() const
 
 		while(nodePointer != NULL)
 		{
-			cout << "---- NODE " << counter << " with memory address " << nodePointer << endl;
-
-			cout << nodePointer->data;
+			cout << "RANK " << counter << nodePointer -> data << endl;
 			nodePointer = nodePointer->next;
-
 			counter++;
 		}
 	}
     else
     {
-        cout << endl << "There are no nodes in the list." << endl << endl;
+        cout << endl << "There are no SuperHeroes in the list." << endl << endl;
     }
- 
+ }
 
+/*****************************************
+*        mergeSort Function
+*****************************************/ 
+template<typename T>
+void DList<T>::mergesort()
+{
+    head = mergesort(head,tail);
+    listNode * newNode = head; 
+    while(newNode -> next)
+    {
+        newNode = newNode -> next;
+    }
+    tail = newNode;
 }
-
-
-
 #endif
