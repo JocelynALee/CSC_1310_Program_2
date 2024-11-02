@@ -1,3 +1,9 @@
+/********************************************************************************
+	Title: 	    LinkedListDriver.h
+	Authors:    Jocelyn Lee & Kylie Truong
+	Date:  	    11/1/2024
+	Purpose:    header file for Linked List and Driver
+*********************************************************************************/
 #ifndef LINKEDLISTDRIVER_H
 #define LINKEDLISTDRIVER_H
 
@@ -89,6 +95,7 @@ public:
     void mergeSort();
     void removeHero(T);
     bool getAtHero(int index, T& value) const;
+    friend ostream& operator<<(ostream& os, const SuperList<T>& list);
 };
 
 /*********************************************/
@@ -267,6 +274,25 @@ bool SuperList<T>::getAtHero(int index, T& value) const
     }
 
     return false;
+}
+
+/*********************************************/
+/*                operator<<                 */
+/*********************************************/
+template<typename T>
+ostream& operator<<(ostream& os, const SuperList<T>& list) 
+{
+    typename SuperList<T>::listNode* current = list.head;
+    if (!current) {
+        os << "The list is empty." << endl;
+        return os;
+    }
+
+    while (current) {
+        os << current->data << " " << endl; 
+        current = current -> next;
+    }
+    return os;
 }
 
 #endif
