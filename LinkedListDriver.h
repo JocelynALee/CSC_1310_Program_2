@@ -26,6 +26,15 @@ class SuperList
         };
         listNode * head;
         listNode * tail; 
+        void printHeroesBottomCheck(listNode*) const
+        {
+            if(listNode == nullptr)
+            {
+                return;
+            }
+            printHeroesBottomCheck(listNode -> next);
+            cout << listNode -> data << endl;
+        }
 
     public:
         /*Constructor*/
@@ -43,46 +52,44 @@ class SuperList
         void printHeroesTop() const;
         void printHeroesBottom() const;
         void mergeSort();
+        void removeHero(T);
 };
 
-/*****************************************
-*        Deconstructor Function
-*****************************************/
+/*********************************************/
+/*                 ~SuperList
+/*********************************************/
+template<typename T>
 SuperList<T>::~SuperList()
 {
-    ListNode * newNode = head;
-    ListNode * temp;
-    while(newNode != NULL)
+    ListNode * nodePtr = head;
+	ListNode * nextNode; 
+    while(nodePtr != NULL)
     {
-        temp = newNode -> next;
-        delete newNode;
-        newNode = temp;
+        nextNode = nodePtr -> next;
+        delete nodePtr;
+        nodePtr = nextNode;
     }
 }
 
-/*****************************************
-*        addSuperHero Function
-*        appendNode
-*****************************************/
-template <typename T>
-void SuperList<T>::addSuperHero(T newValue)
-{
-    ListNode * newNode = new ListNode;
-    newNode -> value = newValue; 
+/*********************************************/
+/*              appendSuperHero
+/*********************************************/
+template<typename T>
+void SuperList<T>::appendSuperHero(T power){
+    listNode * newNode = new listNode; 
+    newNode -> data = power;
+    newNode -> next = NULL;
+    newNode -> previous = NULL; 
     if (!head)
-    {
+    { 
         head = newNode;
         tail = newNode;
-        newNode -> next = NULL;
-        newNode -> prev = NULL;
     }
-        else
-        {
-            tail -> next = newNode; 
-            newNode -> prev = tail;
-            newNode -> next = NULL;
-            tail = newNode;
-        }
+    else{
+        tail -> next = newNode;
+        newNode -> previous = tail; 
+        tail = newNode; 
+    }
 }
 
 /*****************************************
