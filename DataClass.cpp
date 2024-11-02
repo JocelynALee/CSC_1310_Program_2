@@ -8,68 +8,86 @@
 #include "OtherClass.h"
 #include "DataClass.h"
 
-//****************************************************************************
-//                                 menuDisplay()
-//
-// task:                       Display the user menu.
-//
-//****************************************************************************
+/* Setters */
 
-void menuDisplay()
+//******************************************************************
+//                           setName
+//******************************************************************
+void DataClass::setName(const string& n) 
 {
-    int userInput;
-    int endProgram = 0;
-	
-    //Make sure the pokedex file exists
-    fstream pokeDexFile;
-    pokeDexFile.open("pokedex.txt");
-    
-    //Create it if it doesn't exist
-    if (!pokeDexFile)
-    {
-	ofstream pokedexInfo("pokedex.txt");
-    };
-
-    do{
-	cout << "\n\nWhat Would You Like to Do?" << endl;
-    cout << "1. Display the best superHero Catalogue!!" << endl;
-	cout << "2. Display the worst superHero Catalogue!" << endl;
-	cout << "3. Add to Catalogue" << endl;
-	cout << "4. Remove from Cataloge" << endl;
-	cout << "5. Exit" << endl;
-	    cin >> userInput;
-        switch(userInput)
-        {
-            //Displays Best Superhero Catalogue
-            case 1:
-                displayTopList();
-                break;
-
-            //Displays Worst Superhero Catalogue
-            case 2:
-                displayBottomList();
-                break;
-
-            //Adds New Hero to Catalogue
-            case 3:
-                addSuperhero();
-                break;
-
-            //deletes hero
-            case 4:
-                int heroDelete;
-                printSuperHero();
-                cout << "Which hero entry would you like to delete?" << endl;
-                cin >> heroDelete;
-                removeSuperHero(index, heroDelete);
-                break;
-
-            //Ends Program
-            case 5:
-                endProgram = 1;
-                break;
-        }
-	}while (endProgram != 1);
-    cout << "Up, Up, and Away!" << endl << endl;
-    return 0;
+    name = n;
 }
+
+//******************************************************************
+//                          setPowerLevel
+//******************************************************************
+void DataClass::setPowerLevel(int p) 
+{
+    powerLevel = p;
+}
+
+//******************************************************************
+//                          setSuperPower
+//******************************************************************
+void DataClass::setSuperPower(const string& s) 
+{
+    superpower = s;
+}
+
+/* Getters */
+
+//******************************************************************
+//                          getName
+//******************************************************************
+string DataClass::getName() const 
+{
+    return name;
+}
+
+//******************************************************************
+//                          getPowerLevel
+//******************************************************************
+int DataClass::getPowerLevel() const 
+{
+    return powerLevel;
+}
+
+//******************************************************************
+//                          getSuperPower
+//******************************************************************
+string DataClass::getSuperPower() const 
+{
+    return superpower;
+}
+
+/* Operators */
+
+//******************************************************************
+//                          operator <
+//******************************************************************
+bool DataClass::operator<(const DataClass& other) const 
+{
+    return powerLevel < other.powerLevel;
+}
+
+//******************************************************************
+//                          operator >
+//******************************************************************
+bool DataClass::operator>(const DataClass& other) const 
+{
+    return powerLevel > other.powerLevel;
+}
+
+//******************************************************************
+//                          operator =
+//******************************************************************
+bool DataClass::operator==(const DataClass& other) const 
+{
+    return name == other.name && powerLevel == other.powerLevel && superpower == other.superpower;
+}
+
+
+/* Stream Operator */
+ostream& operator<<(ostream& os, const DataClass& data) {
+    os << "Name: " << data.getName() << ", Power Level: " << data.getPowerLevel() << ", Superpower: " << data.getSuperPower();
+    return os;
