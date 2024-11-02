@@ -30,8 +30,8 @@ class SuperList
         /*Help functions for mergeSort & printHeroesBottom*/
         listNode * split(listNode* top) /*Split Function*/
         {
-            listNode * best = start;
-            listNode * worst = start;
+            listNode * best = top;
+            listNode * worst = top;
             while(best -> next != nullptr && best -> next -> next != nullptr)
             {
                 best = best -> next -> next;
@@ -44,7 +44,7 @@ class SuperList
         }
 
         /*merge function*/
-        listNode * merge(listNode* left, listNode* right);
+        listNode * merge(listNode* left, listNode* right)
         {
             if(left == nullptr) 
                 return right;
@@ -68,14 +68,14 @@ class SuperList
         }
 
         /*printHeroesBottomCheck*/
-        void printHeroesBottomCheck(listNode*) const
+        void printHeroesBottomCheck(listNode* node) const
         {
-            if(listNode == nullptr)
+            if(node == nullptr)
             {
                 return;
             }
-            printHeroesBottomCheck(listNode -> next);
-            cout << listNode -> data << endl;
+            printHeroesBottomCheck(node -> next);
+            cout << node -> data << endl;
         }
 
     public:
@@ -103,8 +103,8 @@ class SuperList
 template<typename T>
 SuperList<T>::~SuperList()
 {
-    ListNode * nodePtr = head;
-	ListNode * nextNode; 
+    listNode * nodePtr = head;
+	listNode * nextNode; 
     while(nodePtr != NULL)
     {
         nextNode = nodePtr -> next;
@@ -138,7 +138,7 @@ void SuperList<T>::appendSuperHero(T power){
 /*              printHeroesTop
 /*********************************************/
 template <typename T>
-void SuperList<T>::printSuperHero()
+void SuperList<T>::printHeroesTop() const
 {
     ListNode * nodePointer = head;
     int counter = 1;
@@ -162,7 +162,7 @@ void SuperList<T>::printSuperHero()
 /*             printHeroesBottom
 /*********************************************/
 template<typename T>
-void SuperList<T>::printHeroesBottom(listNode* bottomNode)
+void SuperList<T>::printHeroesBottom() const
 {
     printHeroesBottomCheck(head);
     cout << "\nThe only list you wouldn't want to be top of!\n";
@@ -202,4 +202,48 @@ typename SuperList<T>::listNode* SuperList<T>::mergeSort(listNode* node)
 /*********************************************/
 /*                 removeHero
 /*********************************************/
+template<typename T>
+void SuperList<T>::removeHero(T hero)
+{
+    if (!head)  // List is empty
+    {
+        cout << "There are no heroes in the list.\n";
+        return;
+    }
+    listNode* superHero = head;
+
+    /*Searches for hero*/
+    while (superHero != nullptr && superHero -> data != hero)
+    {
+        superHero = superHero -> next;
+    }
+
+    /*If hero cannot be found*/
+    if (!superHero) 
+    {
+        cout << "This superhero is not in the list.\n";
+        return;
+    }
+
+    if (superHero == head)
+    {
+        head = head -> next;
+        if (head)
+            head -> previous = nullptr;
+        else
+            tail = nullptr;
+    }
+    else if (superHero == tail)
+    {
+        tail = tail -> previous;
+        tail -> next = nullptr;
+    }
+        else
+        {
+            superHero -> previous -> next = superHero -> next;
+            superHero -> next -> previous = superHero -> previous;
+        }
+    delete superHero;
+    cout << "The superhero " << hero << " has been deleted from the list.\n";
+}
 #endif
