@@ -10,6 +10,8 @@
 #include "SmartPointer.h"
 #include <fstream> 
 #include <iostream>
+#include <sstream>
+
 using namespace std;
 
 /*Driver function Prototypes*/
@@ -54,7 +56,7 @@ int main()
             cin >> choice;
         }
 
-        switch (choice)
+        switch(choice)
         {
             /*User Adds SuperHero*/
             case 1:
@@ -104,23 +106,27 @@ int main()
 
             /*Selects Hero from Index*/
             case 5:
-				int index;
-				cout << "\nEnter the index of the superhero to retrieve: ";
-				cin >> index;
-				if (index < 0 || index >= heroList.size()) 
-				{
-					cout << "Invalid index. Please enter a valid index between 0 and " << heroList.size() - 1 << ".\n";
-				}
-    			DataClass hero;
-    			if (index >= 0 && index < heroList.getSize() && heroList.getAtHero(index, hero)) 
-				{
-        			cout << "Hero at index " << index << ": " << hero << endl;
-    			} 
-				else 
-				{
-        			cout << "Invalid index or no hero found at that index.\n";
-    			}
-    			break;
+                int index;
+                cout << "\nEnter the index of the superhero to retrieve: ";
+                cin >> index;
+
+                if (index < 0 || index >= heroList.getSize()) 
+                {
+                    cout << "Invalid index. Please enter a valid index between 0 and " << heroList.getSize() - 1 << ".\n";
+                }
+                else 
+                {
+                    DataClass hero("", 0, "");
+                    if (heroList.getAtHero(index, hero)) 
+                    {
+                        cout << "Hero at index " << index << ": " << hero << endl;
+                    } 
+                    else 
+                    {
+                        cout << "No hero found at that index.\n";
+                    }
+                }
+                break;
             
             /*Exits Program and saves to file*/
             case 6:
@@ -173,8 +179,8 @@ void saveToFile(const SuperList<DataClass>& heroList, const string& heroFile)
         return;
     }
     outFile << "Name,PowerLevel,Superpower\n";
-    for (int i = 0; i < heroList.size(); ++i) {
-        DataClass hero;
+    for (int i = 0; i < heroList.getSize(); ++i) {
+        DataClass hero("", 0, "");
         heroList.getAtHero(i, hero);
         outFile << hero.getName() << "," << hero.getPowerLevel() << "," << hero.getSuperPower() << "\n";
     }
@@ -187,26 +193,29 @@ void saveToFile(const SuperList<DataClass>& heroList, const string& heroFile)
 //******************************************************************
 void loadFile(SuperList<DataClass>& heroList, const string& heroFile) {
     ifstream inFile(heroFile);
-    if (!inFile) 
-	{
+    if (!inFile) {
         cout << "No existing data file found. Starting with an empty list.\n";
         return;
     }
 
     string line;
+    // Skip header line
+    getline(inFile, line);
+
     while (getline(inFile, line)) 
-	{
+    {
         stringstream ss(line);
         string name, superpower;
         int powerLevel;
-        
+
         getline(ss, name, ',');
         ss >> powerLevel;
-        ss.ignore();
+        ss.ignore(1); 
         getline(ss, superpower);
-        
+
         heroList.appendSuperHero(DataClass(name, powerLevel, superpower));
     }
+
     inFile.close();
     cout << "Data loaded successfully from " << heroFile << "!\n";
 }
