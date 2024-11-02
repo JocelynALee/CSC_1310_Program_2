@@ -26,6 +26,48 @@ class SuperList
         };
         listNode * head;
         listNode * tail; 
+
+        /*Help functions for mergeSort & printHeroesBottom*/
+        listNode * split(listNode* top) /*Split Function*/
+        {
+            listNode * best = start;
+            listNode * worst = start;
+            while(best -> next != nullptr && best -> next -> next != nullptr)
+            {
+                best = best -> next -> next;
+                worst = worst -> next;
+            }
+            listNode * middle = worst -> next;
+            worst -> next = nullptr;
+
+            return middle;
+        }
+
+        /*merge function*/
+        listNode * merge(listNode* left, listNode* right);
+        {
+            if(left == nullptr) 
+                return right;
+            if(right == nullptr) 
+                return left;
+
+            if(left -> data <= right -> data)
+            {
+                left -> next = merge(left -> next, right);
+                left -> next -> previous = left;
+                left -> previous = nullptr;
+                return left;
+            }
+                else
+                {
+                    right -> next = merge(left, right -> next);
+                    right -> next -> previous = right;
+                    right -> previous = nullptr;
+                    return right;
+                }
+        }
+
+        /*printHeroesBottomCheck*/
         void printHeroesBottomCheck(listNode*) const
         {
             if(listNode == nullptr)
@@ -92,83 +134,72 @@ void SuperList<T>::appendSuperHero(T power){
     }
 }
 
-/*****************************************
-*        removeSuperHero Function
-*****************************************/
-template <typename T>
-void SuperList<T>::removeSuperHero(int position)
- {
-    ListNode * nodePtr;
-    ListNode *priorNode;
-    if(!head)
-    {
-        cout << "There's no superheroes in this list.\n";
-        return;
-    }
-    else if(head -> value == position)
-    {
-        nodePtr = head -> next;
-        delete head;
-        head = nodePtr;
-    }
-    else
-    {
-        nodePtr = head; 
-        while((nodePtr != NULL) && (nodePtr -> value != position))
-        {
-            priorNode = nodePtr;
-            nodePtr = nodePtr -> next;
-        }
-        if(nodePtr)
-        {
-            if(nodePtr == tail)
-            {
-                tail = priorNode;
-            }
-            priorNode -> next = nodePtr -> next;
-            delete nodePtr;
-        }
-    }     
-}
-
-/*****************************************
-*        printSuperHero Function
-*****************************************/ 
+/*********************************************/
+/*              printHeroesTop
+/*********************************************/
 template <typename T>
 void SuperList<T>::printSuperHero()
 {
     ListNode * nodePointer = head;
-	int counter = 1;
-
+    int counter = 1;
     if(head!= NULL)
     {
         nodePointer = head;
-
-		while(nodePointer != NULL)
-		{
-			cout << "RANK " << counter << nodePointer -> data << endl;
-			nodePointer = nodePointer->next;
-			counter++;
+	while(nodePointer != NULL)
+	{
+		cout << "RANK " << counter << nodePointer -> data << endl;
+		nodePointer = nodePointer->next;
+	counter++;
 		}
-	}
+    }
     else
     {
         cout << endl << "There are no SuperHeroes in the list." << endl << endl;
     }
  }
 
-/*****************************************
-*        mergeSort Function
-*****************************************/ 
+/*********************************************/
+/*             printHeroesBottom
+/*********************************************/
 template<typename T>
-void DList<T>::mergesort()
+void SuperList<T>::printHeroesBottom(listNode* bottomNode)
 {
-    head = mergesort(head,tail);
-    listNode * newNode = head; 
-    while(newNode -> next)
-    {
-        newNode = newNode -> next;
-    }
-    tail = newNode;
+    printHeroesBottomCheck(head);
+    cout << "\nThe only list you wouldn't want to be top of!\n";
 }
+
+/*********************************************/
+/*                 mergeSort
+/*********************************************/
+template<typename T>
+void SuperList<T>::mergeSort()
+{
+    if (head == nullptr || head -> next == nullptr)
+        return;
+    head = mergeSort(head);
+    listNode* temp = head;
+    while (temp -> next != nullptr)
+    {
+        temp = temp->next;
+    }
+    tail = temp;
+}
+
+template<typename T>
+typename SuperList<T>::listNode* SuperList<T>::mergeSort(listNode* node)
+{
+    if (node == nullptr || node -> next == nullptr)
+    {
+        return node;
+    }
+    listNode* mid = split(node);
+    listNode* left = mergeSort(node);
+    listNode* right = mergeSort(mid);
+
+    return merge(left, right);
+}
+
+/*********************************************/
+/*                 removeHero
+/*********************************************/
 #endif
