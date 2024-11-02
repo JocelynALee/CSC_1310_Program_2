@@ -140,6 +140,7 @@ void SuperList<T>::appendSuperHero(T power)
             tail = newNode; 
         }
     size++;
+    mergeSort();
 }
 
 /*********************************************/
@@ -255,6 +256,7 @@ void SuperList<T>::removeHero(T hero)
         }
     delete superHero;
     size--;
+    mergeSort();
     cout << "The superhero " << hero << " has been deleted from the list.\n";
 }
 
