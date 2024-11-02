@@ -5,8 +5,10 @@
 	Purpose:  Header file for dataClass.cpp
     Included: Necessary attributes, getters, setters & operator overloads 
 *********************************************************************************/
+#ifndef DATACLASS_H
+#define DATACLASS_H
 #include <string>
-#include <ostream>
+#include <iostream>
 using namespace std;
 
 /*********************************************/
@@ -19,27 +21,79 @@ private:
     string name;
     int powerLevel;
     string superpower;
+    int rank;
 
 public:
     /* Constructor */
-    DataClass(string n, int p, string s);
+    DataClass(const string& name = "", int powerLevel = 0, const string& superpower = "");
 
-	/* Setters */
-	void setName(const string& n);
-	void setPowerLevel(int p);
-	void setSuperPower(const string& s);
+    /* Setters */
+    void setName(const string& n);
+    void setPowerLevel(int p);
+    void setSuperPower(const string& s);
 
     /* Getters */
-    string getName() const;
-    int getPowerLevel() const;
-    string getSuperPower() const;
+    string getName() const { return name; }
+    int getPowerLevel() const { return powerLevel; }
+    string getSuperPower() const { return superpower; }
+
+    int getRank() const 
+    {
+        if (powerLevel >= 90) return 1; // Top rank
+        else if (powerLevel >= 70) return 2; // Second rank
+        else if (powerLevel >= 50) return 3; // Third rank
+        else if (powerLevel >= 30) return 4; // Fourth rank
+        else return 5; // Lowest rank
+    }
 
     /* Operators */
-    bool operator<(const DataClass& other) const;
-    bool operator>(const DataClass& other) const;
-    bool operator==(const DataClass& other) const;
+    friend ostream& operator<<(ostream& os, const DataClass& hero) 
+    {
+        os << "Name: " << hero.name << ", Power Level: " << hero.powerLevel 
+           << ", Superpower: " << hero.superpower;
+        return os;
+    }
+    
+    bool operator==(const DataClass& other) const 
+    {
+        return name == other.name; 
+    }
 
-    /* Friend function for output */
-    friend std::ostream& operator<<(ostream& os, const DataClass& data);
+    bool operator<(const DataClass& other) const 
+    {
+        return powerLevel < other.powerLevel;
+    }
+
+    bool operator!=(const DataClass& other) const 
+    {
+        return !(*this == other);
+    }
+
+    bool operator<=(const DataClass& other) const 
+    {
+        if (getRank() < other.getRank()) 
+        {
+            return true;
+        }
+        if (getRank() > other.getRank())
+        { 
+            return false;
+        }
+        return name <= other.name;
+    }
+
+    bool operator>(const DataClass& other) const 
+    {
+        if (getRank() > other.getRank()) 
+        {
+            return true;
+        }
+        if (getRank() < other.getRank()) 
+        {
+            return false;
+        }
+        return name > other.name;   
+    } 
 };
+
 #endif
