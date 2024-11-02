@@ -2,11 +2,10 @@
 	Title: 	    LinkedListDriver.h
 	Authors:    Jocelyn Lee & Kylie Truong
 	Date:  	    11/1/2024
-	Purpose:    header file for Linked List and Driver
+	Purpose:   Contains everything needed for the LinkedList, mergeSort & Driver
 *********************************************************************************/
 #ifndef LINKEDLISTDRIVER_H
 #define LINKEDLISTDRIVER_H
-
 #include <iostream>
 using namespace std;
 
@@ -304,4 +303,5 @@ ostream& operator<<(ostream& os, const SuperList<T>& list)
     }
     return os;
 }
+
 #endif
