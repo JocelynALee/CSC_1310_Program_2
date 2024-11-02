@@ -10,6 +10,12 @@
 #include "OtherClass.cpp"
 #include "DataClass.cpp"
 #include "DataClass.h"
+#include <fstream>
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <cctype>
+#include <ctime>
 
 int main()
 {
