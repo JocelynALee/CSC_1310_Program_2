@@ -36,14 +36,18 @@ public:
     string getName() const { return name; }
     int getPowerLevel() const { return powerLevel; }
     string getSuperPower() const { return superpower; }
-    char getRank() const 
+    int getRank() const 
     {
-        if (powerLevel >= 100) return 'S'; // Top rank
-        else if (powerLevel >= 80) return 'A'; // Second rank
-        else if (powerLevel >= 60) return 'B'; // Third rank
-        else if (powerLevel >= 40) return 'C'; // Fourth rank
-        else if (powerLevel >= 20) return 'D'; // Fifth rank
-        else return 'F'; // Lowest rank
+        if (powerLevel >= 80) 
+            return 1; // Top rank
+        else if (powerLevel >= 60) 
+            return 2; // Second rank
+        else if (powerLevel >= 40) 
+            return 3; // Third rank
+        else if (powerLevel >= 20) 
+            return 4; // Fourth rank
+        else 
+            return 5; // Lowest rank
     }
 
     /* Operators */
