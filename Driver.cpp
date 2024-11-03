@@ -104,12 +104,14 @@ int main()
 
             /*Prints heroes from best to worst*/
             case 3:
+                heroList.mergeSort();
                 cout << "\nHeroes from Best to Worst:\n";
                 heroList.printHeroesTop();
                 break;
 
             /*Prints heroes from worst to best*/
             case 4:
+                heroList.mergeSort();
                 cout << "\nHeroes from Worst to Best:\n";
                 heroList.printHeroesBottom();
                 break;
