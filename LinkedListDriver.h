@@ -90,6 +90,7 @@ public:
     bool removeHero(const T& hero);
     void mergeSort(bool ascending = true);
     bool getAtHero(int index, T& value) const;
+    void printHeroesByIndex() const;
     int getSize() const { return size; }
     template<typename U>
     friend ostream& operator<<(ostream& os, const SuperList<U>& list);
@@ -278,6 +279,23 @@ bool SuperList<T>::getAtHero(int index, T& hero) const
     }
 
     return false;
+}
+
+/*********************************************/
+/*           printHeroesByIndex              */
+/*********************************************/
+template<typename T>
+void SuperList<T>::printHeroesByIndex() const 
+{
+    listNode* current = head; 
+    int index = 0;
+
+    while (current != nullptr) 
+    {
+        cout << "Index " << index << ": " << *(current->data) << endl;
+        current = current->next; 
+        index++; 
+    }
 }
 
 /*********************************************/
