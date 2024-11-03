@@ -51,7 +51,7 @@ int main()
         cin >> choice;
 
         /*Input Validation*/
-        while(choice < 1 || choice > 6)
+        while(choice < 1 || choice > 7)
         {
             cout << "Invalid User Input. Please try again: ";
             cin >> choice;
@@ -113,9 +113,15 @@ int main()
                 cout << "\nHeroes from Worst to Best:\n";
                 heroList.printHeroesBottom();
                 break;
+            
+            /*Prints heroes by index*/
+            case 5:
+                cout << "\nHeroes by Index:\n";
+                heroList.printHeroesByIndex(); 
+                break;
 
             /*Selects Hero from Index*/
-            case 5:
+            case 6:
                 int index;
                 cout << "\nEnter the index of the superhero to retrieve: ";
                 cin >> index;
@@ -139,7 +145,7 @@ int main()
                 break;
             
             /*Exits Program and saves to file*/
-            case 6:
+            case 7:
                 saveToFile(heroList, heroFile);
                 cout << "Exiting the program. Up-Up-And-Away!\n";
                 run = false;
@@ -180,8 +186,9 @@ void menuDisplay()
     cout << "\t2. Remove a Superhero\n";
     cout << "\t3. View Heroes (Best to Worst)\n";
     cout << "\t4. View Heroes (Worst to Best)\n";
-    cout << "\t5. Get Hero at Index\n";
-    cout << "\t6. Save and Exit\n";
+    cout << "\t5. Print Heroes by Index\n";
+    cout << "\t6. Get Hero at Index\n";
+    cout << "\t7. Save and Exit\n";
     cout << "Choose an option: ";
 }
 
