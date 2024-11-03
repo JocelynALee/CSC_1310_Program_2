@@ -2,7 +2,7 @@
 	Title: 	 DataClass.cpp
 	Authors: Jocelyn Lee & Kylie Truong
 	Date:  	 11/1/2024
-	Purpose: Implements DataClass methods defined in the header
+	Purpose: Implements DataClass setters defined in the header
 *************************************************************************/
 #include "DataClass.h"
 
