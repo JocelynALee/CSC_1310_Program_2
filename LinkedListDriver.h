@@ -24,14 +24,15 @@ private:
         SmartPointer<T> data;
         listNode * next;
         listNode * previous;
-    /*Constructor for listNode*/
-    listNode(const T& heroData) : data(SmartPointer<T>(new T(heroData))), next(nullptr), previous(nullptr) {}
+        /*Constructor for listNode*/
+        listNode(const T& heroData) : data(SmartPointer<T>(new T(heroData))), next(nullptr), previous(nullptr) {}
     };
+    /*Private Variables*/
     int size;
     listNode * head;
     listNode * tail; 
 
-    /*Helper functions for mergeSort & printHeroesBottom*/
+    /*Helper functions for mergeSort*/
     listNode* mergeSort(listNode* node, bool ascending);
     listNode * split(listNode* top)
     {
@@ -47,7 +48,6 @@ private:
 
         return middle;
     }
-
     listNode * merge(listNode* left, listNode* right, bool ascending)
     {
         if (left == nullptr) 
@@ -143,7 +143,7 @@ template <typename T>
 void SuperList<T>::printHeroesTop() const
 {
     cout << "Top Ranked Heroes!\n";
-    for (int i = 0; i < size; ++i) 
+    for (int i = size - 1; i >= 0; --i) 
     {
         T hero("", 0, ""); 
         if (getAtHero(i, hero)) 
@@ -160,7 +160,7 @@ template <typename T>
 void SuperList<T>::printHeroesBottom() const
 {
     cout << "Bottom Ranked Heroes!\n";
-    for (int i = size - 1; i >= 0; --i) 
+    for (int i = 0; i < size; ++i) 
     {
         T hero("", 0, ""); 
         if (getAtHero(i, hero)) 
