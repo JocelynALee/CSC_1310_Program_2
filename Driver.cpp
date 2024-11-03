@@ -27,6 +27,7 @@ int main()
 {
 	/*Creates SuperList*/
 	SuperList<DataClass> heroList;
+
     /*Opens File*/
     const string heroFile = "superheroes.txt";
     loadFile(heroList, heroFile);
@@ -49,46 +50,55 @@ int main()
         menuDisplay();
         cin >> choice;
 
-        // Input validation for choice
+        /*Input Validation*/
         while(choice < 1 || choice > 6)
         {
             cout << "Invalid User Input. Please try again: ";
             cin >> choice;
         }
+        cin.ignore();
 
         switch(choice)
         {
-            /*User Adds SuperHero*/
+            /*User Adds SuperHeroes until they choose to exit*/
             case 1:
-                cout << "\nEnter Superhero Name: ";
-                cin.ignore();
-                getline(cin, name);
-                cout << "Enter Power Level: ";
-                cin >> powerLevel;
-				while(powerLevel < 0)
-				{
-					cout << "\nPower Level is Invalid. Try again: ";
-					cin >> powerLevel;
-				}
-                cout << "Enter Superpower: ";
-                cin.ignore();
-                getline(cin, superpower);
-                heroList.appendSuperHero(DataClass(name, powerLevel, superpower));
-                cout << "Superhero added successfully!\n";
+                name = "";
+                while(name != "exit")
+                {
+                    cout << "\nInput 'exit' to no longer add Superheroes.";
+                    cout << "\nEnter Superhero Name: ";
+                    getline(cin, name);
+                    if(name == "exit")
+                    {
+                        break;
+                    }
+                    cout << "Enter Power Level: ";
+                        cin >> powerLevel;
+				    while(powerLevel < 0)
+                    {
+                        cout << "\nPower Level is Invalid. Try again: ";
+                            cin >> powerLevel;
+                    }
+                    cin.ignore();
+
+                    cout << "Enter Superpower: ";
+                    getline(cin, superpower);
+                    heroList.appendSuperHero(DataClass(name, powerLevel, superpower));
+                    cout << "\nSuperhero added successfully!\n";
+                }
                 break;
 
             /*User Removes SuperHero*/
             case 2:
 				cout << "\nEnter the name of the superhero to remove: ";
-					cin.ignore();
 					getline(cin, name);
 				if (heroList.removeHero(DataClass(name, 0, "")))
 				{
-					cout << "Superhero removed successfully!\n";
+					cout << "\nSuperhero removed successfully!\n";
 				}
 					else 
 					{
-						cout << "Superhero not found!\n";
+						cout << "\nSuperhero not found!\n";
 					}
 				break;
 
@@ -123,7 +133,7 @@ int main()
                     } 
                     else 
                     {
-                        cout << "No hero found at that index.\n";
+                        cout << "\nNo hero found at that index.\n";
                     }
                 }
                 break;
@@ -131,8 +141,9 @@ int main()
             /*Exits Program and saves to file*/
             case 6:
                 saveToFile(heroList, heroFile);
-                cout << "Exiting the program. Goodbye!\n";
+                cout << "Exiting the program. Up-Up-And-Away!\n";
                 run = false;
+                break;
         }
     }while(run!=false);
     return 0;
@@ -143,13 +154,20 @@ int main()
 //******************************************************************
 void superPrint()
 {
-    cout << "░▒▓███████▓▒ ░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓████████▓▒░▒▓███████▓▒░        ░▒▓███████▓▒░░▒▓██████▓▒░░▒▓███████▓▒░▒▓████████▓▒░" << endl; 
-    cout << "░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░" << endl;     
-    cout << "░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░" << endl;     
-    cout << " ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓██████▓▒░ ░▒▓███████▓▒░        ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░  ░▒▓█▓▒░" << endl;  
-    cout << "       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░             ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░" << endl;     
-    cout << "       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░             ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░" << endl;     
-    cout << "░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░      ░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░" << endl;     
+    cout << "\t ######  ##     ## ########  ######## ######## " << endl;
+    cout << "\t##    ## ##     ## ##     ## ##       ##     ##" << endl;
+    cout << "\t##       ##     ## ##     ## ##       ##     ##" << endl;
+    cout << "\t ######  ##     ## ########  ######   ######## " << endl;
+    cout << "\t      ## ##     ## ##        ##       ##   ##  " << endl;
+    cout << "\t##    ## ##     ## ##        ##       ##    ## " << endl;
+    cout << "\t ######   #######  ##        ######## ##     ##" << endl;
+    cout << "\t ######   #######  ########  ######## ####     " << endl;
+    cout << "\t##    ## ##     ## ##     ##    ##    ####     " << endl;   
+    cout << "\t##       ##     ## ##     ##    ##    ####     " << endl;
+    cout << "\t ######  ##     ## ########     ##     ##      " << endl;
+    cout << "\t      ## ##     ## ##   ##      ##             " << endl;
+    cout << "\t##    ## ##     ## ##    ##     ##    ####     " << endl;   
+    cout << "\t ######   #######  ##     ##    ##    ####     "  <<endl;     
 }
 
 //******************************************************************
